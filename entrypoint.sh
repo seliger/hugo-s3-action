@@ -25,6 +25,10 @@ if [ $err -eq 1 ]; then
   exit 1
 fi
 
+if [ -z "$HUGO_ENVIRONMENT" ]; then
+  HUGO_ENVIRONMENT="production"
+fi
+
 # Create a dedicated profile for this action to avoid
 # conflicts with other actions
 aws configure --profile hugo-s3 <<-EOF > /dev/null 2>&1
@@ -67,13 +71,13 @@ hugo version || exit 1
 
 # Build
 if [ "$MINIFY" = "true" ]; then
-  hugo --minify
+  hugo -e ${HUGO_ENVIRONMENT} --gc --minify
 else
-  hugo
+  hugo -e ${HUGO_ENVIRONMENT} --gc 
 fi
 
 # Deploy as configured in your repo
-hugo deploy
+hugo -e ${HUGO_ENVIRONMENT} deploy --invalidateCDN --maxDeletes -1
 
 # Clear out credentials after we're done
 # We need to re-run `aws configure` with bogus input instead of
