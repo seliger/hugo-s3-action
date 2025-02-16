@@ -71,13 +71,13 @@ hugo version || exit 1
 
 # Build
 if [ "$MINIFY" = "true" ]; then
-  hugo -e ${HUGO_ENVIRONMENT} --gc --minify
+  hugo -e ${HUGO_ENVIRONMENT} --minify
 else
-  hugo -e ${HUGO_ENVIRONMENT} --gc 
+  hugo -e ${HUGO_ENVIRONMENT}
 fi
 
 # Deploy as configured in your repo
-hugo -e ${HUGO_ENVIRONMENT} deploy --invalidateCDN --maxDeletes -1
+hugo -e ${HUGO_ENVIRONMENT} deploy
 
 # Clear out credentials after we're done
 # We need to re-run `aws configure` with bogus input instead of
