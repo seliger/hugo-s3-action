@@ -1,7 +1,16 @@
-FROM pahud/awscli-v2:node-lts
+# Use the latest Ubuntu image as the base
+FROM ubuntu:latest
 
-RUN yum update -y && \
-    yum install -y curl jq
+# Set environment variables to avoid interactive prompts during installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update package lists and install prerequisites for Docker
+RUN apt-get update && apt-get install -y \
+apt-transport-https \
+ca-certificates \
+curl \
+software-properties-common && \
+apt-get dist-upgrade -y
 
 COPY entrypoint.sh /
 
