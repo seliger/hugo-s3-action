@@ -8,7 +8,7 @@ RUN apt-get update -y && \
         apt-get clean && apt-get autoclean && apt-get autoremove && \
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
         ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
-        echo "America/New_York" | sudo tee /etc/timezone && \
+        echo "America/New_York" > /etc/timezone && \
         dpkg-reconfigure --frontend noninteractive tzdata && \
         unzip awscliv2.zip && \
         cd aws && \
