@@ -1,10 +1,9 @@
-
 FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y && \
-        apt-get install -y curl unzip jq tzdata && \
+        apt-get install -y curl unzip jq tzdata nodejs && \
         apt-get clean && apt-get autoclean && apt-get autoremove && \
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
         ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
