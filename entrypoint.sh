@@ -67,6 +67,16 @@ curl -sSL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${
 mv hugo /usr/local/bin/
 cd .. && rm -rf tmp/
 cd ${GITHUB_WORKSPACE}
+
+# Add Dart Sass to PATH if available in workspace node_modules.
+# Themes using Hugo's toCSS require the native Dart Sass binary, not the
+# Node.js wrapper. If the project ran `npm ci` before this action, the binary
+# will be present here.
+DART_SASS_DIR="${GITHUB_WORKSPACE}/node_modules/sass-embedded-linux-x64/dart-sass"
+if [ -d "$DART_SASS_DIR" ]; then
+  export PATH="$DART_SASS_DIR:$PATH"
+fi
+
 hugo version || exit 1
 
 # Build
